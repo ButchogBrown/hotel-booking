@@ -25,7 +25,7 @@ exports.getGuestById = async (req, res, next) => {
 
 exports.createGuest = async (req, res, next) => {
   try {
-    await guestValidate.validate(req.body)
+    await guestValidate.validate(req.body, { abortEarly: false })
     const result = await processCreateGuest(req.body)
 
     return res.status(200).json(result)
@@ -57,7 +57,6 @@ exports.deleteGuest = async (req, res, next) => {
     return res.status(200).json(result)
         
   }catch(err) {
-		console.log(err.status)
     next(err)
   }
 }

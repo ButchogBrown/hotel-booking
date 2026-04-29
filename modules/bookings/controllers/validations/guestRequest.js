@@ -5,7 +5,7 @@ const guestSchema = yup.object({
     last_name: yup.string().required(),
     email: yup.string().email().required(),
     phone_number: yup.string()
-    .matches(/^\+?[0-9\s\-]+$/, "Invalid phone format")
+    .matches(/^09\d{9}$/, "Invalid phone format")
     .required()
 })
 

@@ -52,7 +52,7 @@ exports.weatherService = async (check_in) => {
     })
     const dailyWeather = weather.data.daily
     const index = dailyWeather.time.findIndex((d) => d === check_in)
-    console.log(dailyWeather.time)
+   
     return {
         weather_code: dailyWeather.weathercode[index],
         min_temp: dailyWeather.temperature_2m_min[index],

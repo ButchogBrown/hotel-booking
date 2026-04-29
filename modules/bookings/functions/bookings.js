@@ -1,11 +1,15 @@
 const axios = require('axios')
 const db = require('../../../includes/db/db')
 
-exports.processCreateBooking = async ({ guest_id, room_id, check_in, check_out }, { weather_code, min_temp, max_temp }) => {
-		const result = await db.query(
-			`INSERT INTO bookings (guest_id, room_id, check_in, check_out, weather_code, temp_min, temp_max)
-			values ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-			[guest_id, room_id, check_in, check_out, weather_code, min_temp, max_temp]
+exports.processCreateBooking = async ({ guest_id, room_id, check_in, check_out, price }, { weather_code, min_temp, max_temp }, roomPrice) => {
+	const diffTime = new Date(check_out) - new Date(check_in);
+	const numberOfDays = diffTime / (1000 * 60 * 60 * 24);
+	const total = roomPrice * numberOfDays
+
+	const result = await db.query(
+			`INSERT INTO bookings (guest_id, room_id, check_in, check_out, weather_code, temp_min, temp_max, total)
+			values ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+			[guest_id, room_id, check_in, check_out, weather_code, min_temp, max_temp, total]
 		)
 		if(result.rowCount === 0) {
 			const error = new Error("Booking Failed!")
@@ -42,6 +46,7 @@ exports.processGetAllBookings = async () => {
 			b.check_in,
 			b.check_out,
 			b.status,
+			b.total,
 
 			g.id AS guest_id,
 			g.first_name,

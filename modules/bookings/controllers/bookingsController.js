@@ -27,12 +27,10 @@ exports.getBookingById = async (req, res, next) => {
 
 exports.createBooking = async (req, res, next) => {
   try {
-	
-		// req.body.check_in = new Date(req.body.check_in)
-		// req.body.check_out = new Date(req.body.check_out)
-		// console.log(req.body)
 		const { guest_id, room_id, check_in, check_out } = req.body
-		await validateBooking.validate(req.body)
+
+		await validateBooking.validate(req.body, { abortEarly: false })
+		
 		const guest = await processGetGuestById(guest_id)
 		const room = await processGetRoomById(room_id)
 		const isAvailable = await checkRoomAvailability(room_id, check_in, check_out)
@@ -43,8 +41,7 @@ exports.createBooking = async (req, res, next) => {
 			throw error
 		}
 		const weatherInfo = await weatherService(check_in)
-		console.log(weatherInfo.time)
-		const result = await processCreateBooking(req.body, weatherInfo)
+		const result = await processCreateBooking(req.body, weatherInfo, room.data.price)
 		
 		res.status(200).json(result)
 	}catch (err) {

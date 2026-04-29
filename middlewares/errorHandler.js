@@ -1,5 +1,7 @@
 exports.errorHandler = (err, req, res, next) => {
+	console.log(err)
   	if(err.name === 'ValidationError'){
+		
 		return res.status(400).json({
 			success: false,
 			message: err.errors

@@ -114,7 +114,7 @@ const displayBookings = async () => {
 			</td>
 
 			<td class="p-3 font-semibold text-gray-900">
-				$${b.price}
+				$${b.total}
 			</td>
 
 			<td class="p-3">
@@ -169,7 +169,7 @@ roomForm.addEventListener('submit', async (e) =>{
 		if(res.data.success) {
 			roomForm.reset()
       		modal.classList.add('hidden')
-			fetchRooms()
+			displayRooms()
 		}
 	}catch(err) {
 		const messages = err.response.data.message

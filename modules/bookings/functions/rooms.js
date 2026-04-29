@@ -59,16 +59,17 @@ exports.processDeleteRoom = async (id) => {
 	}
 }
 
-exports.processUpdateRoom = async (id, {room_number, room_type, price}) => {
+exports.processUpdateRoom = async (id, {room_number, room_type, price, capacity}) => {
 	const result = await db.query(
 		`UPDATE rooms
 			SET room_number = $1,
 				room_type = $2,
 				price = $3,
+				capacity = $4,
 				updated_at = NOW()
-			WHERE id = $4 
+			WHERE id = $5 
 			RETURNING *`, 
-			[room_number, room_type, price, id]
+			[room_number, room_type, price, capacity, id]
 	)
 
 	if(result.rowCount  === 0) {
