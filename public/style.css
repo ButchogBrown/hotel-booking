@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+ 	padding: 0;
+  	box-sizing: border-box;
+}
+body {
+	margin: 10% 10% !important;
+}
+.accent-color {
+  color: #685216;
+}
+
+.background-color {
+  background-color: #eee3d3;
+}
+
+.text-color {
+  color: #2b3038;
+}

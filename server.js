@@ -1,9 +1,6 @@
-const express = require('express')
-const app = express()
-const port = 3000
-
-app.use(express.json())
+const app = require('./appSetup')
+const { port } = require('./includes/config/mainConfig.js')
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
+  console.log(`Server is running on port ${port}`)
 })
