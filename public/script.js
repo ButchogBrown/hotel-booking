@@ -215,13 +215,12 @@ bookingForm.addEventListener('submit', async (e) =>{
 	
 	bookingErrorContainer.innerHTML = ""
 	const data = Object.fromEntries(new FormData(bookingForm).entries())
-	console.log(data)
+	
 	try{
 		const res = await axios.post('http://localhost:3000/api/bookings', data)
 		console.log(res)
 		if(res.data.success) {
-			roomForm.reset()
-      		modal.classList.add('hidden')
+			
 			displayBookings()
 		}
 	}catch(err) {
